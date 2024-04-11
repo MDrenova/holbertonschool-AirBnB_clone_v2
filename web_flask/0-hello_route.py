@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Web application"""
 
 from flask import Flask
 
@@ -7,6 +8,7 @@ app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
 def hello_world():
+    """Set route"""
     return "Hello HBNB!"
 
 
