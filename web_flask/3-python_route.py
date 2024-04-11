@@ -20,16 +20,18 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def display_text(text):
     """Set route"""
-    return "C " + text.replace("_"," ")
+    return "C " + text.replace("_", " ")
+
 
 @app.route("/python/", defaults={'text': "is cool"}, strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def display_text_python(text):
     """Set route"""
     if text:
-        return "Python " + text.replace("_"," ")
+        return "Python " + text.replace("_", " ")
     else:
         return "Python is cool"
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
