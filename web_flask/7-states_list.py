@@ -2,10 +2,11 @@
 """Web application"""
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from flask import Flask, render_template
-from models import storage
-from models.state import State
+sys.path.insert(0, os.path.abspath(os.path.join
+                                   (os.path.dirname(__file__), '..')))
+from flask import Flask, render_template  # noqa: E402
+from models import storage  # noqa: E402
+from models.state import State  # noqa: E402
 
 app = Flask(__name__)
 
