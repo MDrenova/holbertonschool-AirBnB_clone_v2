@@ -1,34 +1,28 @@
 #!/usr/bin/python3
-"""
-Creating an app
-"""
+"""Web application"""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
-
 
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_db(error):
+def close_all(error):
     """
-    Simple function
+    func to remove sqlalchemy session
     """
     storage.close()
 
 
-@app.route('/states_list', strict_slashes=False)
+@app.route("/states_list", strict_slashes=False)
 def states_list():
     """
-    dynamic routing
+    States display
     """
-    all_states = [{'id': value.to_dict()['id'],
-                   'state': value.to_dict()['name']}
-                  for value in storage.all(State).values()]
-    all_states = sorted(all_states, key=lambda state: state['state'])
-    return render_template('7-states_list.html', all_states=all_states)
+    states = storage.all("State").values()
+    return render_template('7-states_list.html', states=states)
 
 
-if __name__ == '__main__':
-    app.run(debug=False)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
