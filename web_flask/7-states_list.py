@@ -1,20 +1,34 @@
 #!/usr/bin/python3
-"""Web application"""
+"""
+Creating an app
+"""
 from flask import Flask, render_template
 from models import storage
+from models.state import State
+
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
-@app.route('/states_list')
-def states_list():
-    states = storage.all("State").values()
-    states = sorted(states, key=lambda state: state.name)
-    return render_template('7-states_list.html', states=states)
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def close_db(error):
+    """
+    Simple function
+    """
     storage.close()
 
+
+@app.route('/states_list', strict_slashes=False)
+def states_list():
+    """
+    dynamic routing
+    """
+    all_states = [{'id': value.to_dict()['id'],
+                   'state': value.to_dict()['name']}
+                  for value in storage.all(State).values()]
+    all_states = sorted(all_states, key=lambda state: state['state'])
+    return render_template('7-states_list.html', all_states=all_states)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=False)
