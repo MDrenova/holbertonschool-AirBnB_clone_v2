@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """Web application"""
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template
 from models import storage
 from models.state import State
