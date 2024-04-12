@@ -19,18 +19,16 @@ def close_all(error):
     storage.close()
 
 
-@app.route('/states', strict_slashes=False)
-@app.route('/states/<id>', strict_slashes=False)
-def states_list(id=None):
+@app.route('/hbnb_filters', strict_slashes=False)
+def hbnb_filters():
     """
     dynamic routing
     """
-    valid_id = False
     data = [value for value in storage.all(State).values()]
-    if id in [state.to_dict()['id'] for state in data]:
-        valid_id = True
-    return render_template('9-states.html', data=data,
-                           id=id, valid_id=valid_id)
+    amenities = [amenity.to_dict()['name'] for amenity in
+                 storage.all(Amenity).values()]
+    return render_template('10-hbnb_filters.html',
+                           data=data, amenities=amenities)
 
 
 if __name__ == "__main__":
