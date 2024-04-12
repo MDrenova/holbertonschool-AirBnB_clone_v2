@@ -19,22 +19,18 @@ def close_all(error):
     storage.close()
 
 
-@app.route("/states_list", strict_slashes=False)
-def states_list():
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
+def states_list(id=None):
     """
-    States display
+    dynamic routing
     """
-    states = storage.all("State").values()
-    return render_template('7-states_list.html', states=states)
-
-
-@app.route("/cities_by_states", strict_slashes=False)
-def states_list_cities():
-    """
-    States display
-    """
-    states = storage.all("State").values()
-    return render_template('8-cities_by_states.html', states=states)
+    valid_id = False
+    data = [value for value in storage.all(State).values()]
+    if id in [state.to_dict()['id'] for state in data]:
+        valid_id = True
+    return render_template('9-states.html', data=data,
+                           id=id, valid_id=valid_id)
 
 
 @app.route("/states", strict_slashes=False)
